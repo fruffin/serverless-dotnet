@@ -1,7 +1,6 @@
 # Serverless DotNet
 
 [![serverless](http://public.serverless.com/badges/v3.svg)](http://www.serverless.com)
-[![CircleCI](https://circleci.com/gh/fruffin/serverless-dotnet.svg?style=shield)](https://circleci.com/gh/fruffin/serverless-dotnet)
 
 A Serverless v1.0 plugin to build your C# lambda functions on deploy.
 
