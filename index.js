@@ -18,7 +18,8 @@ class ServerlessDotNet {
 
     this.hooks = {
       'before:deploy:createDeploymentArtifacts': () => BbPromise.bind(this)
-        .then(this.compile)
+        .then(this.compile),
+      'after:deploy:createDeploymentArtifacts': () => BbPromise.bind(this)
         .then(this.pack)
     };
   }

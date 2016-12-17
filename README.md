@@ -1,6 +1,9 @@
 # Serverless DotNet
 
 [![serverless](http://public.serverless.com/badges/v3.svg)](http://www.serverless.com)
+[![npm version](https://badge.fury.io/js/serverless-dotnet.svg)](https://badge.fury.io/js/serverless-dotnet)
+[![dependencies](https://img.shields.io/david/serverless/serverless.svg)](https://www.npmjs.com/package/serverless)
+[![license](https://img.shields.io/npm/l/serverless-dotnet.svg)](https://www.npmjs.com/package/serverless-dotnet)
 
 A Serverless v1.0 plugin to build your C# lambda functions on deploy.
 
