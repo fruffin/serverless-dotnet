@@ -1,6 +1,6 @@
 {
   "name": "serverless-dotnet",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "A Serverless v1.0 plugin to build your C# lambda functions on deploy.",
   "main": "index.js",
   "author": "Fabien Ruffin",
