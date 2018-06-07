@@ -8,16 +8,16 @@ const pack = require('./lib/pack');
 const path = require('path');
 
 class ServerlessDotNet {
-    constructor(serverless, options) {
-        this.serverless = serverless;
-        this.options = options;
+  constructor(serverless, options) {
+    this.serverless = serverless;
+    this.options = options;
 
-        Object.assign(
-            this,
-            clean,
-            compile,
-            pack
-        );
+    Object.assign(
+      this,
+      clean,
+      compile,
+      pack
+    );
 
         this.servicePath = this.serverless.config.servicePath;
         this.customVars = this.serverless.variables.service.custom;
