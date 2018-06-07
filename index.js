@@ -25,14 +25,14 @@ class ServerlessDotNet {
             this.servicePath = path.join(this.serverless.config.servicePath, this.customVars.dotnet.slndir);
         }
 
-        this.hooks = {
-            'before:deploy:createDeploymentArtifacts': () => BbPromise.bind(this)
-                .then(this.clean)
-                .then(this.compile),
-            'after:deploy:createDeploymentArtifacts': () => BbPromise.bind(this)
-                .then(this.pack)
-        };
-    }
+    this.hooks = {
+      'before:deploy:createDeploymentArtifacts': () => BbPromise.bind(this)
+        .then(this.clean)
+        .then(this.compile),
+      'after:deploy:createDeploymentArtifacts': () => BbPromise.bind(this)
+        .then(this.pack)
+    };
+  }
 }
 
 module.exports = ServerlessDotNet;
