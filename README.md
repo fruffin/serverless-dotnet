@@ -21,7 +21,15 @@ plugins:
   - serverless-dotnet
 ```
 
-And that's all there is to it. From this point, `dotnet restore` and `dotnet publish` will run as part of each `serverless deploy` run and the output will be zipped into the `.serverless` folder of your service, as it would for other runtimes.
+If your `.cs` files are in your service's root folder, then that's all there is to it. From this point, `dotnet restore` and `dotnet publish` will run as part of each `serverless deploy` run and the output will be zipped into the `.serverless` folder of your service, as it would for other runtimes.
+
+If your files are contained in a solution folder (for ease of unit testing, for example), then you just need to add the following to the `custom` section of your config file (YAML shown):
+
+```yaml
+custom:
+  dotnet:
+    slndir: relative/path/to/project/folder
+```
 
 ## Note
 If you are using the `aws-csharp` service template, you will need to remove the following line from your `serverless.yml` file as these are not needed any more:
