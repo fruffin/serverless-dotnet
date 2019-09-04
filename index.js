@@ -11,6 +11,10 @@ class ServerlessDotNet {
     this.serverless = serverless;
     this.options = options;
 
+    this.configuration = this.options.hasOwnProperty('configuration') ?
+    this.options.configuration :
+    'Release';
+
     Object.assign(
       this,
       clean,
