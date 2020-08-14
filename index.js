@@ -2,31 +2,33 @@
 
 const BbPromise = require('bluebird');
 
+const validate = require('./lib/validate');
+const setworkspace = require('./lib/setworkspace');
 const clean = require('./lib/clean');
-const compile = require('./lib/compile');
+const setcustomdotnet = require('./lib/setcustomdotnet');
 const pack = require('./lib/pack');
 
 class ServerlessDotNet {
   constructor(serverless, options) {
     this.serverless = serverless;
     this.options = options;
-
-    this.configuration = this.options.hasOwnProperty('configuration') ?
-    this.options.configuration :
-    'Release';
-
+    
     Object.assign(
       this,
+      validate,
+      setworkspace,
       clean,
-      compile,
+      setcustomdotnet,
       pack
     );
 
     this.hooks = {
-      'before:deploy:createDeploymentArtifacts': () => BbPromise.bind(this)
+      'before:package:createDeploymentArtifacts': 
+        () => BbPromise.bind(this)
+        .then(this.validate)
+        .then(this.setworkspace)
         .then(this.clean)
-        .then(this.compile),
-      'after:deploy:createDeploymentArtifacts': () => BbPromise.bind(this)
+        .then(this.setcustomdotnet)
         .then(this.pack)
     };
   }

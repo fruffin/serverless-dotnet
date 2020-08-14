@@ -1,0 +1,46 @@
+functions:
+  api:
+    runtime: ${self:custom.dotnetpacking.projectruntime}
+    handler: ${self:custom.dotnetpacking.assemblyname}::${self:custom.dotnetpacking.namespace}.${self:custom.dotnetpacking.entrypointclass}::FunctionHandlerAsync
+
+custom:
+  dotnetpacking:
+    # [Optional] If nothing  is passed it will use 'Release' internally
+    configuration: ${opt:dotnet-configuration, 'Release'}
+    # [Optional] It will consider serverless path if null (serverless.yml folder)
+    # It overrides relative path (slnrelativepath)
+    slnabsolutepath: ${opt:dotnet-sln-absolute-path, ''}
+    # [Optional] It will consider serverless path if null (serverless.yml folder)
+    slnrelativepath: ${opt:dotnet-sln-relative-path, '..'}
+    # At least one of the next properties 3 is required
+    # It will search for the first .csproj inside of this path. 
+    # Must be a relative path to solution folder.
+    # It overrides the project filter (projectfilter)
+    # It will be filled by the plugin if the value is null
+    projectpath: ${opt:dotnet-project-path, ''} 
+    # It will search for the first .csproj with this name under the solution path
+    # The extension .csproj is optional
+    # It overrides the project filter (projectfilter)
+    # It will be filled by the plugin if the value is null
+    projectfile: ${opt:dotnet-project-file, ''}
+    # It will search for the first .csproj with this word inside of the .csproj content
+    projectfilter: ${opt:dotnet-project-filter, 'AWSProjectType'} 
+    # [Optional] It will be filled by the plugin if empty
+    # Currently getting this information from targetframework property in the .csproj file 
+    # It should be used manually ${self:custom.dotnetpacking.projectruntime}
+    projectruntime: ${opt:dotnet-project-runtime, ''} 
+    # [Optional] It will be filled by the plugin if empty
+    # Currently using the class name of the first .cs file that has a reference for 'Amazon.Lambda.AspNetCoreServer'
+    # It should be used manually ${self:custom.dotnetpacking.entrypointclass}
+    entrypointclass: ${opt:dotnet-entrypoint-class, ''}
+    # [Optional] It will be filled by the plugin if empty
+    # Currently using the projectfile without the .csproj extension
+    # It should be used manually ${self:custom.dotnetpacking.assemblyname}
+    assemblyname: ${opt:dotnet-assembly-name, ''}
+    # [Optional] It will be filled by the plugin if empty
+    # Currently using the namespace extracted from entrypoint class file
+    # It should be used manually ${self:custom.dotnetpacking.namespace}
+    namespace: ${opt:dotnet-namespace, ''}
+    # [Optional] The absolute, or relative path, to be used as the output for the package.
+    # Must include the package name with the zip extension.
+    outputpackage: ${opt:dotnet-outputpackage, ''}
