@@ -1,7 +1,7 @@
 functions:
   api:
-    runtime: ${self:custom.dotnetpacking.projectruntime}
-    handler: ${self:custom.dotnetpacking.assemblyname}::${self:custom.dotnetpacking.namespace}.${self:custom.dotnetpacking.entrypointclass}::FunctionHandlerAsync
+    runtime: $dotnetpacking.projectruntime
+    handler: $dotnetpacking.assemblyname::$dotnetpacking.namespace.$dotnetpacking.entrypointclass::FunctionHandlerAsync
 
 custom:
   dotnetpacking:
@@ -27,20 +27,24 @@ custom:
     projectfilter: ${opt:dotnet-project-filter, 'AWSProjectType'} 
     # [Optional] It will be filled by the plugin if empty
     # Currently getting this information from targetframework property in the .csproj file 
-    # It should be used manually ${self:custom.dotnetpacking.projectruntime}
+    # It should be used manually $dotnetpacking.projectruntime. It just works over function runtime scope 
     projectruntime: ${opt:dotnet-project-runtime, ''} 
     # [Optional] It will be filled by the plugin if empty
-    # Currently using the class name of the first .cs file that has a reference for 'Amazon.Lambda.AspNetCoreServer'
-    # It should be used manually ${self:custom.dotnetpacking.entrypointclass}
-    entrypointclass: ${opt:dotnet-entrypoint-class, ''}
-    # [Optional] It will be filled by the plugin if empty
     # Currently using the projectfile without the .csproj extension
-    # It should be used manually ${self:custom.dotnetpacking.assemblyname}
+    # It should be used manually $dotnetpacking.assemblyname. It just works over function handler scope
     assemblyname: ${opt:dotnet-assembly-name, ''}
     # [Optional] It will be filled by the plugin if empty
     # Currently using the namespace extracted from entrypoint class file
-    # It should be used manually ${self:custom.dotnetpacking.namespace}
+    # It should be used manually $dotnetpacking.namespace. It just works over function handler scope
     namespace: ${opt:dotnet-namespace, ''}
+    # [Optional] It will be filled by the plugin if empty
+    # Currently using the class name of the first .cs file that has a reference for 'Amazon.Lambda.AspNetCoreServer'
+    # It should be used manually $dotnetpacking.entrypointclass. It just works over function handler scope
+    entrypointclass: ${opt:dotnet-entrypoint-class, ''}
     # [Optional] The absolute, or relative path, to be used as the output for the package.
-    # Must include the package name with the zip extension.
+    # Must include the package name with the zip extension. 
     outputpackage: ${opt:dotnet-outputpackage, ''}
+    # [Optional] It will skip the steps of clean and packing ('dotnet restore & dotnet lambda package') if true.
+    # If nothing is passed, it will consider 'false' internally.
+    skippacking: ${opt:dotnet-outputpackage, ''}
+

@@ -5,7 +5,7 @@
 [![license](https://img.shields.io/npm/l/serverless-dotnet-packing.svg)](https://www.npmjs.com/package/serverless-dotnet-packing)
 
 
-A Serverless v1.0 plugin to build your C# lambda functions on deploy.  
+A Serverless v1.1 plugin to build your C# lambda functions on deploy.  
 Forked from [fruffin/serverless-dotnet](https://github.com/fruffin/serverless-dotnet).
 
 This plugin is for you if you don't want to have to run `dotnet restore`, `dotnet lambda package` and add the package will be placed under the `package.artifact` automatically.
@@ -98,43 +98,78 @@ custom:
 ```
 If nothing is passed, it will use the default parameters from the command (`<PROJECT_FOLDER>/bin/<CONFIGURATION>/<DOTNET_RUNTIME>/<PROJECT_FOLDER>.zip`).
 
+### -skippacking
+This `boolean` argument will skip the steps of clean and packing (`dotnet restore & dotnet lambda package`) if true.
+```yaml
+custom:
+  dotnetpacking:
+    skippacking: true
+```
+If nothing is passed, it will consider `false` internally.
+
 ## Properties filled by this plugin
+
+The following properties will be filled by the plugin automacally following the respective steps to get the value for each one **ONLY if the property is empty**. The plugin will use the filled value otherwise.
 
 ### -projectruntime
 Currently getting this information from `<TargetFramework>` property in the `.csproj` file.
 ```yaml
-custom:
-  dotnetpacking:
-    projectruntime: ${opt:dotnet-project-runtime, ''} 
-```
-It should be used manually `${self:custom.dotnetpacking.projectruntime}`.
+functions:
+  api:
+    runtime: $dotnetpacking.projectruntime
 
-### -entrypointclass
-Currently using the class name of the first `.cs` file that has a reference for `Amazon.Lambda.AspNetCoreServer` under the [project path](#-projectpath).
-```yaml
 custom:
   dotnetpacking:
-    entrypointclass: ${opt:dotnet-entrypoint-class, ''}
+    # It does not required if the value is empty
+    projectruntime: ${opt:dotnet-project-runtime, 'dotnetcore3.1'}
 ```
-It should be used manually `${self:custom.dotnetpacking.entrypointclass}`.
-
-### -namespace
-Currently using the namespace extracted from [entrypoint class file](#-entrypointclass).
-```yaml
-custom:
-  dotnetpacking:
-    namespace: ${opt:dotnet-namespace, ''}
-```
-It should be used manually `${self:custom.dotnetpacking.namespace}`.
+It should be used manually `$dotnetpacking.projectruntime`.  
+It just works over function runtime scope.
 
 ### -assemblyname
 Currently using the [project file](#-projectfile) without the `.csproj`.
 ```yaml
+functions:
+  api:
+    handler: $dotnetpacking.assemblyname::<namespace>.<class>::FunctionHandlerAsync
+
 custom:
   dotnetpacking:
-    assemblyname: ${opt:dotnet-assembly-name, ''}
+    # It does not required if the value is empty
+    assemblyname: ${opt:dotnet-assembly-name, 'MyAssemblyName.Custom'}
 ```
-It should be used manually `${self:custom.dotnetpacking.assemblyname}`.
+It should be used manually `$dotnetpacking.assemblyname`.  
+It just works over function handler scope.
+
+### -namespace
+Currently using the namespace extracted from [entrypoint class file](#-entrypointclass).
+```yaml
+functions:
+  api:
+    handler: <assemblyname>::$dotnetpacking.namespace.<class>::FunctionHandlerAsync
+  
+custom:
+  dotnetpacking:
+    # It does not required if the value is empty
+    namespace: ${opt:dotnet-namespace, 'MyNamespace.Custom'}
+```
+It should be used manually `$dotnetpacking.namespace`.  
+It just works over function handler scope.
+
+### -entrypointclass
+Currently using the class name of the first `.cs` file that has a reference for `Amazon.Lambda.AspNetCoreServer` under the [project path](#-projectpath).
+```yaml
+functions:
+  api:
+    handler: <assemblyname>::<namespace>.$dotnetpacking.entrypointclass::FunctionHandlerAsync
+
+custom:
+  dotnetpacking:
+    # It does not required if the value is empty
+    entrypointclass: ${opt:dotnet-entrypoint-class, 'EntryPoint'}
+```
+It should be used manually `$dotnetpacking.entrypointclass`.  
+It just works over function handler scope.
 
 ## Notes
 
