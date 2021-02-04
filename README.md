@@ -5,11 +5,21 @@
 [![license](https://img.shields.io/npm/l/serverless-dotnet-packing.svg)](https://www.npmjs.com/package/serverless-dotnet-packing)
 
 
-A Serverless v1.1 plugin to build your C# lambda functions on deploy.  
+A Serverless v1.2 plugin to build your C# lambda functions on deploy.  
 Forked from [fruffin/serverless-dotnet](https://github.com/fruffin/serverless-dotnet).
 
 This plugin is for you if you don't want to have to run `dotnet restore`, `dotnet lambda package` and add the package will be placed under the `package.artifact` automatically.
-
+## Multiple lambda support (v1.2+)
+The following properties can be used in lamdba scope or global scope. For each lambda that does not have a specific value for that property, the plugin will use the global value. The following properties are supported using lambda scope:
+- `projectpath` property now can be used also under a lambda scope
+- `projectfile` property now can be used also under a lambda scope
+- `projectfilter` property now can be used also under a lambda scope
+- `projectruntime` property now can be used also under a lambda scope
+- `assemblyname` property now can be used also under a lambda scope
+- `namespace` property now can be used also under a lambda scope
+- `entrypointclass` property now can be used also under a lambda scope
+- `outputpackage` property now can be used also under a lambda scope
+- `configuration` property now can be used also under a lambda scope
 ## Install
 
 ```
@@ -107,6 +117,25 @@ custom:
 ```
 If nothing is passed, it will consider `false` internally.
 
+### -uselambdanamefromproject 
+This `boolean` argument will enable the plugin to match lambda by `projectfilter` value.
+  ```yaml
+  custom:
+    dotnetpacking:
+      projectfilter: ${opt:dotnet-project-filter, 'AWSLambdaFunction'}
+      uselambdanamefromproject: true
+      my_dotnet_lambda:
+        <specific settings>
+  ```
+On the `.csproj`
+
+  ```xml
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <AWSLambdaFunction>my_dotnet_lambda</AWSLambdaFunction>
+  </PropertyGroup>
+  ```
+
 ## Properties filled by this plugin
 
 The following properties will be filled by the plugin automacally following the respective steps to get the value for each one **ONLY if the property is empty**. The plugin will use the filled value otherwise.
@@ -116,7 +145,7 @@ Currently getting this information from `<TargetFramework>` property in the `.cs
 ```yaml
 functions:
   api:
-    runtime: $dotnetpacking.projectruntime
+    <omitting the runtime will filled it automatically>
 
 custom:
   dotnetpacking:

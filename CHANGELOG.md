@@ -1,4 +1,21 @@
 # Changelog
+
+## v1.2.0 (04/02/2021)
+#### Enhancements:
+- adding `uselambdanamefromproject` that can filter and match lambda by `projectfilter` value
+- adding support for multiple lambda projects
+  - `projectpath` property now can be used also under a lambda scope
+  - `projectfile` property now can be used also under a lambda scope
+  - `projectfilter` property now can be used also under a lambda scope
+  - `projectruntime` property now can be used also under a lambda scope
+  - `assemblyname` property now can be used also under a lambda scope
+  - `namespace` property now can be used also under a lambda scope
+  - `entrypointclass` property now can be used also under a lambda scope
+  - `outputpackage` property now can be used also under a lambda scope
+  - `configuration` property now can be used also under a lambda scope
+
+---
+
 ## v1.1.0 (17/08/2020)
 #### Enhancements:
 - adding skippacking feature

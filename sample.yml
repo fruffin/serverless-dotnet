@@ -1,6 +1,7 @@
 functions:
-  api:
-    runtime: $dotnetpacking.projectruntime
+  my_dotnet_lambda_1:
+    handler: $dotnetpacking.assemblyname::$dotnetpacking.namespace.$dotnetpacking.entrypointclass::FunctionHandlerAsync
+  my_dotnet_lambda_2:
     handler: $dotnetpacking.assemblyname::$dotnetpacking.namespace.$dotnetpacking.entrypointclass::FunctionHandlerAsync
 
 custom:
@@ -47,4 +48,20 @@ custom:
     # [Optional] It will skip the steps of clean and packing ('dotnet restore & dotnet lambda package') if true.
     # If nothing is passed, it will consider 'false' internally.
     skippacking: ${opt:dotnet-outputpackage, ''}
+    # [Optional] It will skip the steps of clean and packing ('dotnet restore & dotnet lambda package') if true.
+    # If nothing is passed, it will consider 'false' internally.
+    skippacking: ${opt:dotnet-outputpackage, ''}
 
+# Example for specific setup per lambda:
+# In this case 'my_dotnet_lambda_1' will use 'EntryPoint' as the entrypointclass
+# While 'my_dotnet_lambda_1'will use 'Program' as the entrypointclass
+custom:
+  dotnetpacking:
+    uselambdanamefromproject: true
+    projectfilter: ${opt:dotnet-project-filter, 'AWSLambdaFunction'}
+    entrypointclass: ${opt:dotnet-entrypoint-class, 'EntryPoint'}
+    my_dotnet_lambda_2:
+      entrypointclass: 'Program'
+
+
+    
