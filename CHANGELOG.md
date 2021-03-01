@@ -1,5 +1,14 @@
 # Changelog
 
+## v1.2.1 (04/02/2021)
+#### Bug Fixes:
+- fixing project path when using search to consider entire path 
+- fixing project filter to be ignored when using project file
+- fixing ignore search when project path and project file specified
+- fixing package path when project path has multiple levels
+
+---
+
 ## v1.2.0 (04/02/2021)
 #### Enhancements:
 - adding `uselambdanamefromproject` that can filter and match lambda by `projectfilter` value
