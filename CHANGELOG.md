@@ -1,5 +1,13 @@
 # Changelog
 
+## v1.2.2 (22/03/2021)
+#### Enhancements:
+- adding `additionalPackageCommand` property to be able to add more parameters on `dotnet lambda package` command
+- adding `stdoutLimit` property to be able to limit the size of internal process outputs. It represents the last 'n' lines. Default is 200
+- adding `maxOutputBufferSize` property, in KB, to be able to change max buffer size of internal process. Default is 100MB
+#### Bug Fixes:
+- adding parametized limits on stdout and output buffer size
+
 ## v1.2.1 (04/02/2021)
 #### Bug Fixes:
 - fixing project path when using search to consider entire path 

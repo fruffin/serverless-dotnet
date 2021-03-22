@@ -48,9 +48,15 @@ custom:
     # [Optional] It will skip the steps of clean and packing ('dotnet restore & dotnet lambda package') if true.
     # If nothing is passed, it will consider 'false' internally.
     skippacking: ${opt:dotnet-outputpackage, ''}
-    # [Optional] It will skip the steps of clean and packing ('dotnet restore & dotnet lambda package') if true.
-    # If nothing is passed, it will consider 'false' internally.
-    skippacking: ${opt:dotnet-outputpackage, ''}
+    # [Optional] It will use the project filter porperty to match the lambda name with the property value.
+    # For example, <AWSProjectType>dotnet</AWSProjectType> will consider that the lambda resource name is dotnet.
+    uselambdanamefromproject: ${opt:dotnet-uselambdanamefromproject, ''}
+    # [Optional] It will pass this string as additional parameters on `dotnet lambda package` command.
+    additionalpackagecommand: ${opt:dotnet-additionalpackagecommand, ''}
+    # [Optional] It will change the amount of last 'n' lines to print on stdout commands.
+    stdoutlimit: ${opt:dotnet-stdoutlimit, '200'}
+    # [Optional] It will change the max buffer size for the internal process.
+    maxoutputbuffersize: ${opt:dotnet-maxoutputbuffersize, '10240'}
 
 # Example for specific setup per lambda:
 # In this case 'my_dotnet_lambda_1' will use 'EntryPoint' as the entrypointclass

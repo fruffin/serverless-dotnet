@@ -20,6 +20,7 @@ The following properties can be used in lamdba scope or global scope. For each l
 - `entrypointclass` property now can be used also under a lambda scope
 - `outputpackage` property now can be used also under a lambda scope
 - `configuration` property now can be used also under a lambda scope
+- `additionalpackagecommand` property now can be used also under a lambda scope
 ## Install
 
 ```
@@ -135,7 +136,30 @@ On the `.csproj`
     <AWSLambdaFunction>my_dotnet_lambda</AWSLambdaFunction>
   </PropertyGroup>
   ```
-
+### -additionalpackagecommand 
+Property to be able to add more parameters on `dotnet lambda package` command.
+  ```yaml
+  custom:
+    dotnetpacking:
+      additionalpackagecommand: "/p:DebugSymbols=false /p:DebugType=None"
+  ```
+### -stdoutlimit 
+This `integer` argument will limit the size of internal process outputs. It represents the last 'n' lines.
+  ```yaml
+  custom:
+    dotnetpacking:
+      stdoutlimit: 10
+  ```
+If nothing is passed, it will consider `200` internally.
+### -maxoutputbuffersize 
+This `integer` argument will change the max output buffer size of the internal process.  
+The value is expected in KB.
+  ```yaml
+  custom:
+    dotnetpacking:
+      maxoutputbuffersize: 1024 # 1MB
+  ```
+If nothing is passed, it will consider `100MB` internally.
 ## Properties filled by this plugin
 
 The following properties will be filled by the plugin automacally following the respective steps to get the value for each one **ONLY if the property is empty**. The plugin will use the filled value otherwise.
