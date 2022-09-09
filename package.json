@@ -1,6 +1,6 @@
 {
   "name": "serverless-dotnet-packing",
-  "version": "1.2.3",
+  "version": "1.2.4",
   "description": "A Serverless v1.2 plugin to build your C# lambda functions on deploy.",
   "main": "index.js",
   "author": "Leidson Germano",
