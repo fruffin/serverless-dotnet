@@ -1,5 +1,5 @@
 {
-  "name": "serverless-dotnet",
+  "name": "@stoneage/serverless-dotnet",
   "version": "1.7.0",
   "description": "A Serverless plugin to build your C# lambda functions on deploy.",
   "main": "index.js",
